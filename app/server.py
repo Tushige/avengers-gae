@@ -8,9 +8,9 @@ from io import BytesIO
 from fastai import *
 from fastai.vision import *
 
-model_file_url = 'https://www.dropbox.com/s/y4kl2gv1akv7y4i/stage-2.pth?raw=1'
+model_file_url = 'https://docs.google.com/uc?export=download&id=1Am64tw8AFxg_zIXCRILL5gOg8BxpdPgg'
 model_file_name = 'model'
-classes = ['black', 'grizzly', 'teddys']
+classes = ['iron_man', 'captain_america']
 path = Path(__file__).parent
 
 app = Starlette()
@@ -25,7 +25,7 @@ async def download_file(url, dest):
             with open(dest, 'wb') as f: f.write(data)
 
 async def setup_learner():
-    await download_file(model_file_url, path/'models'/f'{model_file_name}.pth')
+    await download_file(model_file_url, path/'models'/f'{model_file_name}.pkl')
     data_bunch = ImageDataBunch.single_from_classes(path, classes,
         ds_tfms=get_transforms(), size=224).normalize(imagenet_stats)
     learn = cnn_learner(data_bunch, models.resnet34, pretrained=False)
